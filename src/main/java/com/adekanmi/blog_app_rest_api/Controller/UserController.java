@@ -1,9 +1,6 @@
 package com.adekanmi.blog_app_rest_api.Controller;
 
-import com.adekanmi.blog_app_rest_api.DTO.CommentDto;
-import com.adekanmi.blog_app_rest_api.DTO.LikeDto;
-import com.adekanmi.blog_app_rest_api.DTO.PostDto;
-import com.adekanmi.blog_app_rest_api.DTO.UserDto;
+import com.adekanmi.blog_app_rest_api.DTO.*;
 import com.adekanmi.blog_app_rest_api.Model.Post;
 import com.adekanmi.blog_app_rest_api.Response.*;
 import com.adekanmi.blog_app_rest_api.Service.UserService;
@@ -11,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -39,6 +37,15 @@ public class UserController {
         // return ResponseEntity.created(uri).body( );
         return new ResponseEntity<>(userService.register(userDto) , CREATED);
     }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto){
+        log.info("Successfully  login {} " , loginDto.getEmail());
+        return  new ResponseEntity<>(userService.login(loginDto),CREATED);
+    }
+
+
+
 
     @PostMapping(value = "/create")
     public ResponseEntity<CreatePostResponse> create(@RequestBody PostDto postDto){
