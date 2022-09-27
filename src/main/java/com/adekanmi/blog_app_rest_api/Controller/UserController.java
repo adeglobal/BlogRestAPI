@@ -14,8 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController   @Slf4j
 @RequestMapping( value = "/api")
@@ -41,10 +40,8 @@ public class UserController {
     @PostMapping(value = "/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto){
         log.info("Successfully  login {} " , loginDto.getEmail());
-        return  new ResponseEntity<>(userService.login(loginDto),CREATED);
+        return  new ResponseEntity<>(userService.login(loginDto),OK);
     }
-
-
 
 
     @PostMapping(value = "/create")
@@ -83,5 +80,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findPostById(id));
     }
 
+    @DeleteMapping(value = "/deleteComment/{id}")
+    public ResponseEntity<DeleteCommentResponse> deleteComment(@PathVariable(value = "id") Integer id){
+        return ResponseEntity.ok().body(userService.deleteCommentById(id));
+    }
+    @DeleteMapping(value = "/deletePost/{id}")
+    public ResponseEntity<DeletePostResponse> deletePost(@PathVariable (value ="id") Integer id){
+        return ResponseEntity.ok().body(userService.deletePostById(id));
+    }
 
 }

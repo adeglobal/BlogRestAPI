@@ -24,4 +24,9 @@ public interface UserService {
 
     Post findPostById(int id);
 
+    DeleteCommentResponse deleteCommentById( int id);
+
+    DeletePostResponse deletePostById(int id);
+
+
 }

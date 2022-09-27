@@ -141,6 +141,20 @@ public class UserServiceImpl implements UserService {
         return postRepository.findById(id).orElseThrow(()-> new PostNotFoundException("Post With ID: " + id + " Not Found "));
     }
 
+    @Override
+    public DeleteCommentResponse deleteCommentById(int id) {
+        commentRepository.deleteById(id);
+      //  List<Comment> commentList = commentRepository.findAll()
+        return new DeleteCommentResponse("comment delete successfully",LocalDateTime.now());
+    }
+
+    @Override
+    public DeletePostResponse deletePostById(int id) {
+        postRepository.deleteById(id);
+        return new DeletePostResponse("Post successfully deleted",LocalDateTime.now());
+    }
+
+
     public User findUserByEmail(String email){
         return userRepository.findUserByEmail(email).orElseThrow(()-> new UserNotFoundException("User With email: " + email + " Not Found "));
     }

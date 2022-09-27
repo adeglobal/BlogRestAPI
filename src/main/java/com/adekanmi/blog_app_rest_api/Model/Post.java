@@ -1,9 +1,11 @@
 package com.adekanmi.blog_app_rest_api.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -41,12 +43,14 @@ public class Post {
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
     private  User user;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "post")
-    private  List<Comment> commentList = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private  List<Comment> commentList = new ArrayList<>();
+
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
     private  List<Like> likeList = new ArrayList<>();
 
 }
